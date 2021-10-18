@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.6;
 
-// import "ds-test/test.sol";
+import "ds-test/test.sol";
 import "./Dapptutorial.sol";
 
 contract DapptutorialTest is DSTest {
@@ -9,6 +9,14 @@ contract DapptutorialTest is DSTest {
 
     function setUp() public {
         dapptutorial = new Dapptutorial();
+    }
+
+    function test_withdraw_property(uint96 amount) public {
+        payable(address(dapptutorial)).transfer(amount);
+        uint preBalance = address(this).balance;
+        dapptutorial.withdraw(42);
+        uint postBalance = address(this).balance;
+        assertEq(preBalance + amount, postBalance);    
     }
 
     function test_withdraw() public {
