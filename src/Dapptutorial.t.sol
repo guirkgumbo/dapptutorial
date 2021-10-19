@@ -19,6 +19,14 @@ contract DapptutorialTest is DSTest {
         assertEq(preBalance + amount, postBalance);    
     }
 
+    function test_withdraw_symbolically(uint guess) public {
+        payable(address(dapptutorial)).transfer(1 ether);
+        uint preBalance = address(this).balance;
+        dapptutorial.withdraw(guess);
+        uint postBalance = address(this).balance;
+        assertEq(preBalance + 1 ether, postBalance);
+    }
+
     function test_withdraw() public {
         payable(address(dapptutorial)).transfer(1 ether);
         uint preBalance = address(this).balance;
